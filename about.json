@@ -1,0 +1,8 @@
+{
+  "name": "Topic Next Button",
+  "about_url": "",
+  "component": true,
+  "modifiers": {
+    "svg_icons": ["fa-chevron-circle-right"]
+  }
+}

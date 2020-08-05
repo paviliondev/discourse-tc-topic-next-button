@@ -1,0 +1,5 @@
+topic_next_always_go_to_first_post:
+  default: true
+  type: bool
+  description:
+    en: "If true, always navigate to first post of target Topic"
