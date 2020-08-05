@@ -27,7 +27,6 @@ createWidget('topic-next-button-mobile-widget', {
   },
 
   goToNextTopic () {
-    console.log('here');
     nextTopicUrl ().then (url => {
       if (url) {
         url = settings.topic_next_always_go_to_first_post ? url.substring(0, url.lastIndexOf('/')) : url;
