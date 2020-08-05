@@ -1,6 +1,7 @@
 import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 import {nextTopicUrl, previousTopicUrl} from 'discourse/lib/topic-list-tracker';
+import DiscourseURL from "discourse/lib/url";
 
 createWidget('topic-next-button-mobile-widget', {
   tagName: 'span.topic-next-button-mobile-widget',
