@@ -1,6 +1,7 @@
 import {withPluginApi} from 'discourse/lib/plugin-api';
 import {h} from 'virtual-dom';
 import {nextTopicUrl, previousTopicUrl} from 'discourse/lib/topic-list-tracker';
+import DiscourseURL from "discourse/lib/url";
 
 export default {
   name: 'topic-next-button-edits',
@@ -31,7 +32,6 @@ export default {
         },
 
         goToNextTopic () {
-          console.log('here');
           nextTopicUrl ().then (url => {
             if (url) {
               url = settings.topic_next_always_go_to_first_post ? url.substring(0, url.lastIndexOf('/')) : url;
