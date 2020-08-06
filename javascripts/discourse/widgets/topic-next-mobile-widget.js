@@ -1,37 +1,59 @@
-import { createWidget } from 'discourse/widgets/widget';
-import { h } from 'virtual-dom';
-import {nextTopicUrl, previousTopicUrl} from 'discourse/lib/topic-list-tracker';
+import { createWidget } from "discourse/widgets/widget";
+import { h } from "virtual-dom";
+import {
+  nextTopicUrl,
+  previousTopicUrl,
+} from "discourse/lib/topic-list-tracker";
 import DiscourseURL from "discourse/lib/url";
 
-createWidget('topic-next-button-mobile-widget', {
-  tagName: 'span.topic-next-button-mobile-widget',
+createWidget("topic-next-button-mobile-widget", {
+  tagName: "span.topic-next-button-mobile-widget",
+
+  buildKey: () => `topic-next-button-mobile-widget`,
+
+  defaultState() {
+    return { urlChecked: false, targetUrl: null };
+  },
 
   html(attrs) {
-    const {fullScreen, currentUser, topic} = attrs;
-    var controls = [];
-    if (this.currentUser && this.site.mobileView) {
-      controls.push (
-        h (
-          'span.topic-next-button-mobile',
-          this.attach ('button', {
-            className: 'topic-next-button-mobile',
-            buttonClass: 'popup-menu-btn',
-            action: 'goToNextTopic',
-            icon: 'chevron-right',
-          })
-        )
-      );
-    }
+    let _this = this;
 
+    if (!this.state.urlChecked) {
+      nextTopicUrl().then((url) => {
+        _this.state.urlChecked = true;
+        _this.state.targetUrl = url;
+        _this.scheduleRerender();
+      });
+    }
+    const { fullScreen, currentUser, topic } = attrs;
+    var controls = [];
+
+    if (_this.state.urlChecked && _this.state.targetUrl) {
+      if (this.currentUser && this.site.mobileView) {
+        controls.push(
+          h(
+            "span.topic-next-button-mobile",
+            this.attach("button", {
+              className: "topic-next-button-mobile",
+              buttonClass: "popup-menu-btn",
+              action: "goToNextTopic",
+              icon: "chevron-right",
+            })
+          )
+        );
+      }
+    }
     return controls;
   },
 
-  goToNextTopic () {
-    nextTopicUrl ().then (url => {
+  goToNextTopic() {
+    nextTopicUrl().then((url) => {
       if (url) {
-        url = settings.topic_next_always_go_to_first_post ? url.substring(0, url.lastIndexOf('/')) : url;
-        DiscourseURL.routeTo (url);
+        url = settings.topic_next_always_go_to_first_post
+          ? url.substring(0, url.lastIndexOf("/"))
+          : url;
+        DiscourseURL.routeTo(url);
       }
     });
-  }
+  },
 });
