@@ -35,7 +35,7 @@ export default {
 
           if (_this.state.urlChecked &&_this.state.targetUrl) {
             if (currentUser) {
-              currentUser.admin ? controls.push(h("br")) : false;
+              currentUser.admin ? controls.push(h("br"), h("span.topic-next-button-gap"), h("br")) : false;
               controls.push(
                 h(
                   "span.topic-next-button",
