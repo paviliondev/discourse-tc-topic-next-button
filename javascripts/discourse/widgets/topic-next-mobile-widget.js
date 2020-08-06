@@ -25,24 +25,33 @@ createWidget("topic-next-button-mobile-widget", {
         _this.scheduleRerender();
       });
     }
+
     const { fullScreen, currentUser, topic } = attrs;
     var controls = [];
 
-    if (_this.state.urlChecked && _this.state.targetUrl) {
-      if (this.currentUser && this.site.mobileView) {
-        controls.push(
-          h(
-            "span.topic-next-button-mobile",
-            this.attach("button", {
-              className: "topic-next-button-mobile",
-              buttonClass: "popup-menu-btn",
-              action: "goToNextTopic",
-              icon: "chevron-right",
-            })
-          )
-        );
-      }
+    if (
+      this.currentUser &&
+      this.site.mobileView &&
+      _this.state.urlChecked &&
+      _this.state.targetUrl &&
+      (settings.topic_next_categories === "" ||
+        settings.topic_next_categories
+          .split("|")
+          .includes(`${topic.category_id}`))
+    ) {
+      controls.push(
+        h(
+          "span.topic-next-button-mobile",
+          this.attach("button", {
+            className: "topic-next-button-mobile",
+            buttonClass: "popup-menu-btn",
+            action: "goToNextTopic",
+            icon: "chevron-right",
+          })
+        )
+      );
     }
+
     return controls;
   },
 
