@@ -30,12 +30,24 @@ export default {
           }
 
           const controls = this._super(attrs) || [];
-
           const { fullScreen, currentUser, topic, the_next_topic_url } = attrs;
 
-          if (_this.state.urlChecked &&_this.state.targetUrl) {
+          if (
+            _this.state.urlChecked &&
+            _this.state.targetUrl &&
+            (settings.topic_next_categories === "" ||
+              settings.topic_next_categories
+                .split("|")
+                .includes(`${topic.category_id}`))
+          ) {
             if (currentUser) {
-              currentUser.admin ? controls.push(h("br"), h("span.topic-next-button-gap"), h("br")) : false;
+              currentUser.admin
+                ? controls.push(
+                    h("br"),
+                    h("span.topic-next-button-gap"),
+                    h("br")
+                  )
+                : false;
               controls.push(
                 h(
                   "span.topic-next-button",

@@ -3,3 +3,9 @@ topic_next_always_go_to_first_post:
   type: bool
   description:
     en: "If true, always navigate to first post of target Topic"
+topic_next_categories:
+  type: list
+  list_type: category
+  default: ""
+  description:
+    en: "The categories that will include the Topic Next button.  Leave blank for all"
