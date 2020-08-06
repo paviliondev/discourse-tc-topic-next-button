@@ -26,7 +26,7 @@ createWidget("topic-next-button-mobile-widget", {
       });
     }
 
-    const { fullScreen, currentUser, topic } = attrs;
+    const category_id = attrs.model.category_id
     var controls = [];
 
     if (
@@ -37,7 +37,7 @@ createWidget("topic-next-button-mobile-widget", {
       (settings.topic_next_categories === "" ||
         settings.topic_next_categories
           .split("|")
-          .includes(`${topic.category_id}`))
+          .includes(`${category_id}`))
     ) {
       controls.push(
         h(

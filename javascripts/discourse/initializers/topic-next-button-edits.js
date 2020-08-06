@@ -30,7 +30,7 @@ export default {
           }
 
           const controls = this._super(attrs) || [];
-          const { fullScreen, currentUser, topic, the_next_topic_url } = attrs;
+          const { currentUser, topic } = attrs;
 
           if (
             _this.state.urlChecked &&
