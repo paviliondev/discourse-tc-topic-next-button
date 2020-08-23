@@ -67,14 +67,13 @@ createWidget("topic-next-button-mobile-widget", {
   },
 
   goToNextTopic() {
-    if (!this.state.loaded) {
-      return;
-    }
-
-    let url = this.state.targetUrl;
-    url = settings.topic_next_always_go_to_first_post
-      ? url.substring(0, url.lastIndexOf("/"))
-      : url;
-    DiscourseURL.routeTo(url);
+    nextTopicUrl().then((url) => {
+      if (url) {
+        url = settings.topic_next_always_go_to_first_post
+          ? url.substring(0, url.lastIndexOf("/"))
+          : url;
+        DiscourseURL.routeTo(url);
+      }
+    });
   },
 });

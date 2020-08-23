@@ -15,26 +15,39 @@ export default {
         buildKey: (attrs) => `timeline-controls-${attrs.id}`,
 
         defaultState() {
-          return { urlChecked: false, targetUrl: null };
+          return { loading: false, loaded: false, targetUrl: null };
         },
 
-        html(attrs) {
-          let _this = this;
+        getNextTopic(state) {
+          if (state.loading) {
+            return;
+          }
 
-          if (!this.state.urlChecked) {
-            nextTopicUrl().then((url) => {
-              _this.state.urlChecked = true;
-              _this.state.targetUrl = url;
-              _this.scheduleRerender();
-            });
+          state.loading = true;
+
+          nextTopicUrl().then((url) => {
+            if (url && url.length) {
+              state.targetUrl = url;
+            } else {
+              state.targetUrl = "";
+            }
+            state.loading = false;
+            state.loaded = true;
+            this.scheduleRerender();
+          });
+        },
+
+        html(attrs, state) {
+          if (!state.loaded) {
+            this.getNextTopic(state);
           }
 
           const controls = this._super(attrs) || [];
           const { currentUser, topic } = attrs;
 
           if (
-            _this.state.urlChecked &&
-            _this.state.targetUrl &&
+            state.loaded &&
+            state.targetUrl &&
             (settings.topic_next_categories === "" ||
               settings.topic_next_categories
                 .split("|")
@@ -51,7 +64,7 @@ export default {
               controls.push(
                 h(
                   "span.topic-next-button",
-                  _this.attach("button", {
+                  this.attach("button", {
                     className: "topic-next-button",
                     buttonClass: "popup-menu-btn",
                     action: "goToNextTopic",
