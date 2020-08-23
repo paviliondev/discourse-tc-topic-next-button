@@ -12,32 +12,43 @@ createWidget("topic-next-button-mobile-widget", {
   buildKey: () => `topic-next-button-mobile-widget`,
 
   defaultState() {
-    return { urlChecked: false, targetUrl: null };
+    return { loading: false, loaded: false, targetUrl: null };
   },
 
-  html(attrs) {
-    let _this = this;
-
-    if (!this.state.urlChecked) {
-      nextTopicUrl().then((url) => {
-        _this.state.urlChecked = true;
-        _this.state.targetUrl = url;
-        _this.scheduleRerender();
-      });
+  getNextTopic(state) {
+    if (state.loading) {
+      return;
     }
 
-    const category_id = attrs.model.category_id
+    state.loading = true;
+
+    nextTopicUrl().then((url) => {
+      if (url && url.length) {
+        state.targetUrl = url;
+      } else {
+        state.targetUrl = "";
+      }
+      state.loading = false;
+      state.loaded = true;
+      this.scheduleRerender();
+    });
+  },
+
+  html(attrs, state) {
+    if (!state.loaded) {
+      this.getNextTopic(state);
+    }
+
+    const category_id = attrs.model.category_id;
     var controls = [];
 
     if (
       this.currentUser &&
       this.site.mobileView &&
-      _this.state.urlChecked &&
-      _this.state.targetUrl &&
+      state.loaded &&
+      state.targetUrl &&
       (settings.topic_next_categories === "" ||
-        settings.topic_next_categories
-          .split("|")
-          .includes(`${category_id}`))
+        settings.topic_next_categories.split("|").includes(`${category_id}`))
     ) {
       controls.push(
         h(
@@ -56,13 +67,14 @@ createWidget("topic-next-button-mobile-widget", {
   },
 
   goToNextTopic() {
-    nextTopicUrl().then((url) => {
-      if (url) {
-        url = settings.topic_next_always_go_to_first_post
-          ? url.substring(0, url.lastIndexOf("/"))
-          : url;
-        DiscourseURL.routeTo(url);
-      }
-    });
+    if (!this.state.loaded) {
+      return;
+    }
+
+    let url = this.state.targetUrl;
+    url = settings.topic_next_always_go_to_first_post
+      ? url.substring(0, url.lastIndexOf("/"))
+      : url;
+    DiscourseURL.routeTo(url);
   },
 });
