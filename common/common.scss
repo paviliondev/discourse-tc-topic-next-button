@@ -1,24 +1,34 @@
-.topic-navigation-outlet {
-  order: 1;
-}
+.topic-navigation {
+  display: flex;
 
-.topic-next-button, .topic-next-button.btn .d-icon {
+  .topic-navigation-outlet {
+    order: 1;
+    margin-left: 5px;
+  
 
-  span {
-    display: inline-block;
-  }
+    .topic-next-button, .topic-next-button.btn .d-icon {
 
-  background-color: $tertiary;
-  color: $secondary;
-  transition: color 0s;
+      span {
+        display: inline-block;
+      }
 
-  @include hover {
-     background-color: $tertiary-medium;
-     color: $secondary;
-     
-    .d-icon {
-      color: $primary-low;
-      background-color: $tertiary-medium;
+      .widget-button {
+        padding: .4em .6em;
+      }
+
+      background-color: $tertiary;
+      color: $secondary;
+      transition: color 0s;
+
+      @include hover {
+        background-color: $tertiary-medium;
+        color: $secondary;
+        
+        .d-icon {
+          color: $primary-low;
+          background-color: $tertiary-medium;
+        }
+      }
     }
   }
 }

@@ -6,10 +6,10 @@ import {
 } from "discourse/lib/topic-list-tracker";
 import DiscourseURL from "discourse/lib/url";
 
-createWidget("topic-next-button-mobile-widget", {
-  tagName: "span.topic-next-button-mobile-widget",
+createWidget("topic-next-button-widget", {
+  tagName: "span.topic-next-button-widget",
 
-  buildKey: () => `topic-next-button-mobile-widget`,
+  buildKey: () => `topic-next-button-widget`,
 
   defaultState() {
     return { loading: false, loaded: false, targetUrl: null };
@@ -51,9 +51,9 @@ createWidget("topic-next-button-mobile-widget", {
     ) {
       controls.push(
         h(
-          "span.topic-next-button-mobile",
+          "span.topic-next-button",
           this.attach("button", {
-            className: "topic-next-button-mobile",
+            className: "topic-next-button",
             buttonClass: "popup-menu-btn",
             action: "goToNextTopic",
             icon: "chevron-right",
