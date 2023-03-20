@@ -39,12 +39,11 @@ createWidget("topic-next-button-mobile-widget", {
       this.getNextTopic(state);
     }
 
-    const category_id = attrs.model.category_id;
+    const category_id = attrs.topic.category_id;
     var controls = [];
 
     if (
       this.currentUser &&
-      this.site.mobileView &&
       state.loaded &&
       state.targetUrl &&
       (settings.topic_next_categories === "" ||
@@ -58,6 +57,7 @@ createWidget("topic-next-button-mobile-widget", {
             buttonClass: "popup-menu-btn",
             action: "goToNextTopic",
             icon: "chevron-right",
+            label: this.site.mobileView ? "" : themePrefix("topic_next_label")
           })
         )
       );
