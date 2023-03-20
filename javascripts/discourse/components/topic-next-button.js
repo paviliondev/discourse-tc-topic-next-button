@@ -14,8 +14,6 @@ export default class TopicNextButton extends Component {
 
   @action
   goToNextTopic() {
-    console.log('hellooooo');
-    console.log(this.site.desktopView);
     nextTopicUrl().then((url) => {
       if (url) {
         url = settings.topic_next_always_go_to_first_post
