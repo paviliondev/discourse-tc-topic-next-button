@@ -1,20 +1,37 @@
-.topic-next-button, .topic-next-button.btn .d-icon {
+.topic-navigation {
+  display: flex;
 
-  span {
-    display: inline-block;
+  .timeline-container .topic-timeline .timeline-controls {
+    margin-bottom: 0em;
   }
 
-  background-color: $tertiary;
-  color: $secondary;
-  transition: color 0s;
+  .topic-navigation-outlet {
+    order: 1;
+    margin-left: 5px;
 
-  @include hover {
-     background-color: $tertiary-medium;
-     color: $secondary;
-     
-    .d-icon {
-      color: $primary-low;
-      background-color: $tertiary-medium;
+    .topic-next-button, .topic-next-button.btn .d-icon {
+
+      span {
+        display: inline-block;
+      }
+
+      .widget-button {
+        padding: .4em .6em;
+      }
+
+      background-color: $tertiary;
+      color: $secondary;
+      transition: color 0s;
+
+      @include hover {
+        background-color: $tertiary-medium;
+        color: $secondary;
+        
+        .d-icon {
+          color: $primary-low;
+          background-color: $tertiary-medium;
+        }
+      }
     }
   }
 }
